@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
+import { Instrument_Sans } from "next/font/google";
 import "./globals.css";
+
+const instrumentSans = Instrument_Sans({
+  subsets: ['latin'],
+  variable: "--font-instrument-sans",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: "ReviewMyArticle",
@@ -12,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-bt">
+    <html lang="pt-bt" className={instrumentSans.variable}>
       <body className={`antialiased`}>{children}</body>
     </html>
   );
