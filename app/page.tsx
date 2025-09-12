@@ -14,7 +14,7 @@ export default function Home() {
           <Image src={login_vector} alt="login-vector" fill={true} />
         </div>
         <h1 className="text-center font-semibold text-xl text-(--darkgray)">Inscreva-se para o ReviewMyArticle!</h1>
-        <Link href='/subscribe'>
+        <Link href='/congress'>
           <Button variant={'light'}>Iniciar -&gt;</Button>
         </Link>
         <div className="text-lg text-center font-semibold">

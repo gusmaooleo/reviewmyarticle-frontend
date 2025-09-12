@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PasswordInput } from "@/components/ui/password-input";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function LoginForm() {
   return (
-    <div className="w-[650px] h-full bg-(--background) lg:rounded-r-3xl shadow-xl">
-      <div className="flex flex-col px-[6rem] py-[10rem] gap-[38px] items-center">
+    <div className="h-full bg-(--background) lg:rounded-r-3xl shadow-xl w-full">
+      <div className="flex flex-col px-[6rem] lg:py-[10rem] py-[5rem] gap-[38px] items-center">
         <div className="flex w-full justify-start">
           <h1 className="font-bold text-3xl text-(--default-dark)">Login</h1>
         </div>
@@ -23,8 +24,8 @@ export default function LoginForm() {
         </div>
 
         <div className="grid w-full items-center gap-3">
-          <Label htmlFor="email">Senha</Label>
-          <Input type="password" id="email" />
+          <Label htmlFor="password">Senha</Label>
+          <PasswordInput id="password" />
           <div className="flex w-full justify-end">
             <Link href={"/forgot-password"} className="underline">
               Esqueci a senha

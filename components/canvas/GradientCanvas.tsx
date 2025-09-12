@@ -1,6 +1,6 @@
 "use client";
 
-import { ShaderGradientCanvas, ShaderGradient } from "@shadergradient/react";
+import { ShaderGradient, ShaderGradientCanvas } from "@shadergradient/react";
 
 export default function GradientCanvas({ children }: React.PropsWithChildren) {
   return (
@@ -8,7 +8,7 @@ export default function GradientCanvas({ children }: React.PropsWithChildren) {
       <ShaderGradientCanvas
         style={{
           width: "100dvw",
-          height: "100dvh",
+          height: "100vh",
           position: "absolute",
           zIndex: -1,
         }}

@@ -1,5 +1,5 @@
-export default function SubscribePage() {
+export default function CongressPage() {
   return (
     <></>
-  );
+  )
 }
