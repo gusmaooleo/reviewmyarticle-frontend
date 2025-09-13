@@ -1,6 +1,6 @@
 import { TranslucentBoxContainer } from "@/components/shared/TranslucentBoxContainer";
 import { Label } from "@/components/ui/label";
-import { CongressService } from "@/lib/services/congress.service";
+import { CongressService } from "@/lib/congress/congress.service";
 
 export default async function CongressIdPage({
   params,
@@ -16,8 +16,6 @@ export default async function CongressIdPage({
         <Label htmlFor="title">Título</Label>
         <h1 id="title" className="text-(--default-dark) text-lg font-bold">{congress?.name}</h1>
       </div>
-
-      
       
       <div>
         <Label htmlFor="desc">Data</Label>

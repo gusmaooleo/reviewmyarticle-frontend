@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Results({ congresses }: { congresses: ICongress[] }) {
   return (
-    <div className="flex flex-col gap-2 overflow-auto">
+    <div className="flex flex-grow flex-col gap-2 overflow-auto">
       {congresses.length === 0 ? (
         <p className="text-(--lightgray)">Nenhum congresso encontrado.</p>
       ) : (

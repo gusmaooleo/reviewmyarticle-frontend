@@ -1,3 +1,6 @@
+"use client";
+
+
 import { IconInput } from "@/components/ui/icon-input";
 import { SearchButton } from "./SearchButton";
 import { Search } from "lucide-react";
