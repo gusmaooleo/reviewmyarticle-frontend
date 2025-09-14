@@ -14,12 +14,13 @@ export class CongressService {
     page: number = 1
   ): Promise<CongressesPayload> {
     try {
+      await new Promise(resolve => setTimeout(resolve, 1000))
       const skip = (page - 1) * 15;
       const limit = page * 15;
-      const data = fakeCongresses
-        .filter((q) => q.name.toLowerCase().includes(query))
-        .slice(skip, limit);
-      return { total: query ? data.length : fakeCongresses.length, data };
+      const withoutSlice = fakeCongresses
+        .filter((q) => q.name.toLowerCase().includes(query));
+      const data = withoutSlice.slice(skip, limit)
+      return { total: query ? withoutSlice.length : fakeCongresses.length, data };
     } catch (error) {
       console.error(error);
       return { total: 0, data: [] };

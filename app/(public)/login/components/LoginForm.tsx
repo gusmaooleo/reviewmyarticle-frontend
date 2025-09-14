@@ -1,5 +1,6 @@
+import InputLabel from "@/components/shared/InputLabel";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/scn-input";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/ui/password-input";
 import Image from "next/image";
