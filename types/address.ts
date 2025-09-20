@@ -3,7 +3,7 @@ import z from "zod";
 export const AddressSchema = z.object({
   id: z.number(),
   street: z.string(),
-  number: z.string(),
+  number: z.string().optional(),
   complement: z.string(),
   city: z.string(),
   state: z.string(),

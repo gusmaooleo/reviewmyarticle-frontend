@@ -5,11 +5,18 @@ import { IArticle } from "./articles";
 
 const RolesSchema = z.enum(["ROLE_ADMIN", "ROLE_PARTICIPANT", "ROLE_REVIEWER"]);
 
+export const PasswordSchema = z
+  .string({ message: "Valor inváldo" })
+  .min(8, "A senha deve ter 8 ou mais caracteres.")
+  .regex(/[A-Z]/, "A senha deve conter pelo menos uma letra maiúscula.")
+  .regex(/\d/, "A senha deve conter pelo menos um número.")
+  .regex(/[^A-Za-z0-9]/, "A senha deve conter pelo menos um caractere especial.");
+
 export const ExtenseUserSchema = z.object({
   id: z.number(),
-  usernameUser: z.string(),
-  login: z.email(),
-  password: z.string(),
+  usernameUser: z.string({ message: "Escolha um nome para o usuário" }),
+  login: z.email({ message: "Endereço de e-mail inválido" }),
+  password: z.string({ message: "Digite uma senha válida" }),
   workPlace: z.string(),
   membershipNumber: z.string(),
   isReviewer: z.boolean(),

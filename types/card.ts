@@ -2,9 +2,10 @@ import z from "zod";
 
 export const CardSchema = z.object({
   id: z.number(),
-  number: z.string(),
+  cardNumber: z.string(),
   expired: z.date(),
-  cvv: z.number(),
+  cvv: z.string(),
+  flag: z.string(),
   userId: z.number().optional(),
 })
 
