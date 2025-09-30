@@ -1,3 +1,5 @@
+import AppSidebar from "@/components/shared/AppSidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function LoggedInLayout({
   children,
@@ -5,9 +7,16 @@ export default function LoggedInLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="bg-gray-900 text-white p-4">Menu Logado</header>
-      <main className="flex-1 p-6">{children}</main>
-    </div>
+    <SidebarProvider>
+      <div className="min-h-screen flex flex-row w-full">
+        <div className="flex flex-col w-full">
+          <AppSidebar />
+          <div className="p-4 w-fit">
+            <SidebarTrigger />
+          </div>
+          <main className="flex-grow p-6">{children}</main>
+        </div>
+      </div>
+    </SidebarProvider>
   );
 }

@@ -17,7 +17,7 @@ export const PersonalDataSchema = ExtenseUserSchema.omit({
     password: PasswordSchema,
     passwordConfirmation: z.string(),
     telephoneNumber: z.string({ message: "Digite o número sem espaços ou hífens." }),
-    profilePic: z.base64url().optional(),
+    profilePic: z.object().optional(),
   })
   .refine((data) => data.password === data.passwordConfirmation, {
     message: "As senhas não coincidem",

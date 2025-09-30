@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="pt-bt" className={instrumentSans.variable}>
       <body className={`antialiased`}>
         {children}
-        <Toaster />
+        <Toaster richColors />
       </body>
     </html>
   );

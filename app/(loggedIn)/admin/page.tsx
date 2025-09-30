@@ -1,3 +1,7 @@
 export default function AdminPage() {
-  return <></>;
+  return (
+    <>
+      <p>Admin page</p>
+    </>
+  );
 }

@@ -1,4 +1,3 @@
-import InputLabel from "@/components/shared/InputLabel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/scn-input";
 import { Label } from "@/components/ui/label";
