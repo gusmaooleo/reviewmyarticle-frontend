@@ -1,21 +1,37 @@
 import AppSidebar from "@/components/shared/AppSidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { environments } from "@/environments/environments";
+import { apiFetch } from "@/lib/api";
+import { CongressService } from "@/lib/congress/congress.service";
+import { getAppState } from "@/lib/state";
+import { AppState } from "@/types/states";
+import { IUser } from "@/types/user";
+import { redirect } from "next/navigation";
 
-export default function LoggedInLayout({
+export default async function LoggedInLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const appState = await getAppState<AppState>("app_state");
+  const congress = await (new CongressService()).getCongressById(appState.currentLoggedInCongress);
+  const user: IUser = await apiFetch(`${environments.url}/users/me`);
+
+  if (!user.id) {
+    // mudar para fallback de "não autenticado"
+    redirect("/login");
+  }
+  
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex flex-row w-full">
-        <div className="flex flex-col w-full">
-          <AppSidebar />
-          <div className="p-4 w-fit">
-            <SidebarTrigger />
+        {congress ? (
+          <div className="flex flex-col w-full">
+            <AppSidebar congress={congress} />
+            <main className="flex-grow p-6">{children}</main>
           </div>
-          <main className="flex-grow p-6">{children}</main>
-        </div>
+        ): (<p>Não foi possível encontrar os congressos</p>)}
       </div>
     </SidebarProvider>
   );

@@ -1,5 +1,6 @@
 import { IArticleRanking } from "@/types/articles";
-import { Link2Icon, SquareArrowOutUpRight } from "lucide-react";
+import { SquareArrowOutUpRight } from "lucide-react";
+import Link from "next/link";
 
 export default function RankingArticleCard({
   article,
@@ -23,10 +24,12 @@ export default function RankingArticleCard({
           <h2 className="text-lg font-medium text-(--default-dark)">
             {article?.title}
           </h2>
-          <p className="text-[#737282] font-medium">{article?.finalScore}/5.0</p>
+          <p className="text-[#737282] font-medium truncate">{article?.finalScore}/5.0</p>
         </div>
       </div>
-      <SquareArrowOutUpRight className="text-(--default-dark)" width={20} />
+      <Link href={`/articles/${article?.id}`}>
+        <SquareArrowOutUpRight className="text-(--default-dark)" width={20} />
+      </Link>
     </div>
   );
 }

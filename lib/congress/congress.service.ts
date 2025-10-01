@@ -27,11 +27,12 @@ export class CongressService {
     }
   }
 
-  async getCongressById(id: number): Promise<ICongress | null> {
+  async getCongressById(id?: number): Promise<ICongress | null> {
     try {
+      if (!id) return null
       return fakeCongresses.filter((c) => c.id === id)[0];
     } catch (error) {
-      console.error(error);
+      console.log(error);
       return null;
     }
   }

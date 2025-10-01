@@ -7,6 +7,7 @@ import parseISO8601Date from "@/lib/utils/formatDate";
 import formatModality from "@/lib/utils/formatModality";
 import Image from "next/image";
 import Link from "next/link";
+import LoginRedirect from "./components/LoginRedirect";
 
 export default async function CongressIdPage({
   params,
@@ -93,9 +94,7 @@ export default async function CongressIdPage({
           <Button variant={'outline'}>Voltar</Button>
         </Link>
         
-        <Link href={"/subscribe"}>
-          <Button>Inscrever -&gt;</Button>
-        </Link>
+        <LoginRedirect congressId={parseInt(id)} />
       </div>
     </TranslucentBoxContainer>
   );

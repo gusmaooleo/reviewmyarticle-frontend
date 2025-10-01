@@ -1,10 +1,18 @@
 import ArticleCard from "@/components/articles/ArticleCard";
 import { ArticleService } from "@/lib/article/article.service";
+import { getAppState } from "@/lib/state";
+import { AppState } from "@/types/states";
 
 export default async function SentArticlesSection() {
   const articleService = new ArticleService();
-  let articles = await articleService.getArticlesPerCongress(3);
-  articles = [...articles!, ...articles!, ...articles!]
+  const appState = await getAppState<AppState>("app_state");  
+  let articles: any[] | null = [];
+  
+  if (appState.currentLoggedInCongress) {
+    articles = await articleService.getArticlesPerCongress(
+      appState.currentLoggedInCongress
+    );
+  }
 
   return (
     <div className="w-full h-[500px] md:h-[800px]">
@@ -17,5 +25,5 @@ export default async function SentArticlesSection() {
         </div>
       </div>
     </div>
-  )
+  );
 }
