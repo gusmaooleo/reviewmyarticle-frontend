@@ -6,7 +6,7 @@ import { Input } from "../ui/scn-input";
 import { Textarea } from "../ui/textarea";
 
 export const InputLabel = forwardRef<HTMLInputElement, InputProps>(
-  ({ labelText, name, id, placeholder, type, ...rest }, ref) => {
+  ({ labelText, name, id, placeholder, type, error, ...rest }, ref) => {
     return (
       <div className="grid w-full items-center gap-3">
         <Label htmlFor={id}>{labelText}</Label>
@@ -30,13 +30,18 @@ export const InputLabel = forwardRef<HTMLInputElement, InputProps>(
             {...rest}
           />
         )}
+        {error && (
+          <p className="text-red-500 text-xs">
+            {error}
+          </p>
+        )}
       </div>
     );
   }
 );
 
 export const TextAreaLabel = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ labelText, name, id, placeholder, ...props }, ref) => {
+  ({ labelText, name, id, placeholder, error, ...props }, ref) => {
     return (
       <div className="grid w-full items-center gap-3">
         <Label htmlFor={id}>{labelText}</Label>
@@ -48,6 +53,11 @@ export const TextAreaLabel = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           ref={ref}
           {...props}
         />
+        {error && (
+          <p className="text-red-500 text-xs">
+            {error}
+          </p>
+        )}
       </div>
     );
   }

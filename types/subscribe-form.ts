@@ -16,7 +16,10 @@ export const PersonalDataSchema = ExtenseUserSchema.omit({
   .extend({
     password: PasswordSchema,
     passwordConfirmation: z.string(),
-    telephoneNumber: z.string({ message: "Digite o número sem espaços ou hífens." }),
+    telephoneNumber: z
+      .string({ message: "Digite o número sem espaços ou hífens." })
+      .min(15, "Digite o número completo")
+      .max(15),
     profilePic: z.object().optional(),
   })
   .refine((data) => data.password === data.passwordConfirmation, {
@@ -24,14 +27,13 @@ export const PersonalDataSchema = ExtenseUserSchema.omit({
     path: ["passwordConfirmation"],
   });
 
-export const AddressPaymentSchema = AddressSchema.omit({ id: true })
-  .and(
-    CardSchema.omit({ id: true, userId: true }).extend({
-      expired: z
-        .string()
-        .regex(/^(?:0[1-9]|1[0-2])\/\d{2}$/, "Formato inválido. Use mm/aa"),
-    })
-  );
+export const AddressPaymentSchema = AddressSchema.omit({ id: true }).and(
+  CardSchema.omit({ id: true, userId: true }).extend({
+    expired: z
+      .string()
+      .regex(/^(?:0[1-9]|1[0-2])\/\d{2}$/, "Formato inválido. Use mm/aa"),
+  })
+);
 
 export const SubscribeSchema = PersonalDataSchema.and(AddressPaymentSchema).and(
   z.object({ isReviewer: z.boolean() })

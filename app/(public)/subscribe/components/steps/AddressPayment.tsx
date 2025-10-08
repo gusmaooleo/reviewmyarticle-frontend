@@ -60,6 +60,28 @@ export function AddressPayment() {
       </div>
 
       <div className="flex w-full flex-col sm:flex-row gap-6">
+        <div className="w-full">
+          <Controller
+            name="number"
+            control={control}
+            render={({ field }) => (
+              <InputLabel
+                {...field}
+                name="number"
+                labelText="Número"
+                onChange={(e) => {
+                  let digits = e.target.value.replace(/\D/g, "");
+                  field.onChange(digits);
+                }}
+              />
+            )}
+          />
+          {errors.number && (
+            <p className="text-red-500 text-xs">
+              {String(errors?.number?.message)}
+            </p>
+          )}
+        </div>
         <div className="hidden">
           <InputLabel
             {...register("country")}
@@ -135,7 +157,15 @@ export function AddressPayment() {
             )}
           </div>
           <div className="w-full sm:w-[40%]">
-            <InputLabel {...register("cvv")} name="cvv" labelText="CVV" />
+            <InputLabel
+              {...register("cvv")}
+              name="cvv"
+              labelText="CVV"
+              onChange={(e) => {
+                let digits = e.target.value.replace(/\D/g, "");
+                e.target.value = digits;
+              }}
+            />
             {errors.cvv && (
               <p className="text-red-500 text-xs mt-1">
                 {String(errors.cvv.message)}

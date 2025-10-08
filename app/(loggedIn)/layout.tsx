@@ -17,8 +17,7 @@ export default async function LoggedInLayout({
   const congress = await (new CongressService()).getCongressById(appState.currentLoggedInCongress);
   const user: IUser = await apiFetch(`${environments.url}/users/me`);
 
-  if (!user.id) {
-    // mudar para fallback de "não autenticado"
+  if (!user.id || appState.currentLoggedInCongress !== user.congressoId) {
     redirect("/login");
   }
   

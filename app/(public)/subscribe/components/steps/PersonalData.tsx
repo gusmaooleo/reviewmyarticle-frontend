@@ -3,6 +3,7 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { InputLabel } from "@/components/shared/InputLabel";
 import AvatarUpload from "@/components/file-upload/avatar-upload";
+import formatPhone from "@/lib/utils/formatPhoneNumber";
 
 export function PersonalData() {
   const {
@@ -43,11 +44,21 @@ export function PersonalData() {
 
       <div className="flex w-full flex-row gap-6">
         <div className="w-full">
-          <InputLabel
-            {...register("telephoneNumber")}
+          <Controller
             name="telephoneNumber"
-            type="text"
-            labelText="Telefone"
+            control={control}
+            render={({ field }) => (
+              <InputLabel
+                {...field}
+                labelText="Telefone"
+                type="tel"
+                value={field.value || ""}
+                onChange={(e) => {
+                  const formatted = formatPhone(e.target.value);
+                  field.onChange(formatted);
+                }}
+              />
+            )}
           />
           {errors.telephoneNumber && (
             <p className="text-red-500 text-xs mt-1">
@@ -107,7 +118,7 @@ export function PersonalData() {
             control={control}
             render={({ field: { value, onChange } }) => (
               <AvatarUpload
-                defaultAvatar={ value ? value.preview ?? undefined : undefined }
+                defaultAvatar={value ? value.preview ?? undefined : undefined}
                 onFileChange={(f) => onChange(f)}
               />
             )}
