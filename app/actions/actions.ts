@@ -37,3 +37,14 @@ export async function getArticleBodyBase64(articleId: number): Promise<string | 
     return null;
   }
 }
+
+
+export async function clearAppState() {
+  const cookieStore = await cookies();
+  cookieStore.set("app_state", "", {
+    httpOnly: true,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 0,
+  });
+}

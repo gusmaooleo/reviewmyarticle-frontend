@@ -7,7 +7,6 @@ import { getAppState } from "@/lib/state";
 import { AppState } from "@/types/states";
 import { IUser } from "@/types/user";
 import { redirect } from "next/navigation";
-import { updateAppState } from "../actions/actions";
 
 export default async function LoggedInLayout({
   children,

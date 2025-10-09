@@ -2,20 +2,9 @@
 
 import logo from "@/public/logo-icon.svg";
 import { ICongress } from "@/types/congress";
-import { SearchIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "../ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
 import {
   Sidebar,
   SidebarContent,
@@ -24,9 +13,14 @@ import {
 } from "../ui/sidebar";
 import { IUser } from "@/types/user";
 import ArticlesDialog from "./ArticlesDialog";
-
-
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { clearAppState } from "@/app/actions/actions";
+import { ChevronDown } from "lucide-react";
 
 export default function AppSidebar({
   congress,
@@ -35,17 +29,22 @@ export default function AppSidebar({
   congress: ICongress;
   user: IUser;
 }) {
-  const routes = (user as any).roles[0].id === 3 ? {
-    "/articles": "Artigos",
-    "/review": "Revisões",
-    // "/admin": "Administração",
-  } : (user as any).roles[0].id === 2 ? {
-    "/articles": "Artigos",
-  } : {
-    "/articles": "Artigos",
-    "/review": "Revisões",
-    // "/admin": "Administração",
-  };
+  const routes =
+    (user as any).roles[0].id === 3
+      ? {
+          "/articles": "Artigos",
+          "/review": "Revisões",
+          // "/admin": "Administração",
+        }
+      : (user as any).roles[0].id === 2
+      ? {
+          "/articles": "Artigos",
+        }
+      : {
+          "/articles": "Artigos",
+          "/review": "Revisões",
+          // "/admin": "Administração",
+        };
 
   type keyofRoutes = keyof typeof routes;
 
@@ -54,6 +53,11 @@ export default function AppSidebar({
     pathname.includes(route)
       ? "text-(--primary-light-blue) hover:text-(--primary-light-blue-hover)"
       : "";
+
+  async function handleLogout() {
+    await clearAppState();
+    window.location.href = "/login";
+  }
 
   return (
     <>
@@ -93,6 +97,16 @@ export default function AppSidebar({
         <SidebarTrigger />
         <div className="flex flex-row gap-3 items-center">
           <p className="z-1000">{user.usernameUser}</p>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="z-1000">
+              <ChevronDown />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={() => handleLogout()}>
+                Sair
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           {user.profileImage?.length! > 500 ? (
             <Image
               src={`data:image/jpeg;base64,${user.profileImage}`}
@@ -101,9 +115,9 @@ export default function AppSidebar({
               width={40}
               className="rounded-full z-1000"
             />
-          ): (
-            <Image 
-              src={'/default-photo.png'}
+          ) : (
+            <Image
+              src={"/default-photo.png"}
               alt="userImage"
               height={40}
               width={40}
