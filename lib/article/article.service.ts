@@ -43,8 +43,9 @@ export class ArticleService {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(a)
 
-      return (await a.json());
+      return await a.json();
     } catch (error) {
       console.error(error);
       return null;

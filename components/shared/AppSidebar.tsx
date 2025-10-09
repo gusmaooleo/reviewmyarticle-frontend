@@ -23,6 +23,7 @@ import {
   SidebarTrigger,
 } from "../ui/sidebar";
 import { IUser } from "@/types/user";
+import ArticlesDialog from "./ArticlesDialog";
 
 
 
@@ -43,7 +44,7 @@ export default function AppSidebar({
   } : {
     "/articles": "Artigos",
     "/review": "Revisões",
-    "/admin": "Administração",
+    // "/admin": "Administração",
   };
 
   type keyofRoutes = keyof typeof routes;
@@ -72,23 +73,7 @@ export default function AppSidebar({
               ))}
             </div>
             <div className="flex flex-col w-full md:items-center md:justify-center md:flex-row gap-3">
-              <Dialog>
-                <DialogTrigger className="flex flex-row gap-2 max-[766px]:max-w-fit max-w-[200px] rounded-full bg-(--default-dark) px-3 py-1 text-white font-medium items-center cursor-pointer">
-                  <SearchIcon />
-                  <p className="truncate">Pesquisar artigo</p>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Pesquisar artigos</DialogTitle>
-                  </DialogHeader>
-
-                  <DialogFooter>
-                    <DialogClose asChild>
-                      <Button variant="outline">Cancelar</Button>
-                    </DialogClose>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
+              <ArticlesDialog />
               <div className="flex flex-row gap-2 max-[766px]:max-w-full max-[990px]:max-w-[100px] max-w-[300px] rounded-full bg-(--primary-light-blue) px-1 py-1 text-white font-semibold items-center">
                 <Image
                   src={congress.imageThumbnail ?? ""}
@@ -108,13 +93,23 @@ export default function AppSidebar({
         <SidebarTrigger />
         <div className="flex flex-row gap-3 items-center">
           <p className="z-1000">{user.usernameUser}</p>
-          <Image
-            src={`data:image/jpeg;base64,${user.profileImage}`}
-            alt="userImage"
-            height={40}
-            width={40}
-            className="rounded-full z-1000"
-          />
+          {user.profileImage?.length! > 500 ? (
+            <Image
+              src={`data:image/jpeg;base64,${user.profileImage}`}
+              alt="userImage"
+              height={40}
+              width={40}
+              className="rounded-full z-1000"
+            />
+          ): (
+            <Image 
+              src={'/default-photo.png'}
+              alt="userImage"
+              height={40}
+              width={40}
+              className="rounded-full z-1000"
+            />
+          )}
         </div>
       </div>
     </>

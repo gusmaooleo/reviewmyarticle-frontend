@@ -70,11 +70,11 @@ export default function ArticleSubmissionFormSection({ loggedUserId }: { loggedU
     async (data) => {
       console.log(data);
       data.articlesUsersIds?.push(loggedUserId!)
-      const a = await createArticleAction(data);
-      console.log(a)
+      const createArticle = await createArticleAction(data);
+      console.log(createArticle)
+      window.location.reload();
     },
     (errors) => {
-      // console.error(errors);
     }
   );
 
@@ -83,7 +83,7 @@ export default function ArticleSubmissionFormSection({ loggedUserId }: { loggedU
       <h1 className="font-bold text-xl">Submissão de artigos</h1>
 
       <FormProvider {...methods}>
-        <form onSubmit={submitForm} className="flex flex-col py-6 h-full">
+        <div className="flex flex-col py-6 h-full">
           <div className="flex flex-col gap-6 grow pb-4">
             <div className="flex flex-col gap-6 grow pb-4">
               <InputLabel
@@ -147,10 +147,10 @@ export default function ArticleSubmissionFormSection({ loggedUserId }: { loggedU
             </div>
 
             <div className="flex w-full justify-end mb-1">
-              <Button type="submit">Submeter artigo</Button>
+              <Button onClick={submitForm}>Submeter artigo</Button>
             </div>
           </div>
-        </form>
+        </div>
       </FormProvider>
     </div>
   );

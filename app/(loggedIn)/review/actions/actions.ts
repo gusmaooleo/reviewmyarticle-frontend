@@ -16,7 +16,7 @@ export async function getReviews(fake: boolean = false) {
     const token = JSON.parse(
       (await cookies()).get("app_state")!.value
     ) as AppState;
-    
+
     return await articleService.getArticlesPerCongress(
       token.currentLoggedInCongress!
     );
@@ -24,4 +24,17 @@ export async function getReviews(fake: boolean = false) {
     const user: IUser = await apiFetch(`${environments.url}/users/me`);
     return ((await reviewService.getReviewsByUser(user.id!)) as any)["content"];
   }
+}
+
+export async function putReviews(id: number, review: any) {
+  try {
+    const response = await apiFetch(`${environments.url}/reviews/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(review),
+    });
+    console.log(response)
+
+    return response;
+  } catch (error) {}
 }

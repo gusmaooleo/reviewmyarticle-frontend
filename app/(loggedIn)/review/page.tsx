@@ -5,7 +5,8 @@ import ArticlesList from "./components/ArticlesList";
 import ArticleViewer from "./components/ArticleViewer";
 import ReviewForm from "./components/ReviewForm";
 import { IArticle } from "@/types/articles";
-import { getReviews } from "./actions/actions";
+import { getReviews, putReviews } from "./actions/actions";
+import { toast } from "sonner";
 
 export default function ArticlesReviewPage() {
   const [articles, setArticle] = useState<IArticle[]>([]);
@@ -34,13 +35,18 @@ export default function ArticlesReviewPage() {
     return articles.find((a) => a.id === activeId) ?? null;
   }, [articles, activeId]);
 
-  const handleSubmit = (payload: {
+  const handleSubmit = async (payload: {
     notes: string;
     extra: string;
     score: number | null;
   }) => {
     if (!activeArticle) return;
-    console.log("SUBMIT REVIEW", { articleId: activeId, ...payload });
+    toast.success("Avaliação submetida com sucesso!");
+    const response = await putReviews(activeArticle.id, {
+      comment: payload.notes,
+      score: payload.score,
+    });
+    console.log(response);
   };
 
   return (
@@ -58,7 +64,9 @@ export default function ArticlesReviewPage() {
           </>
         ) : (
           <div className="w-full flex items-center justify-center p-8">
-            <p className="text-muted-foreground">Não foram atribuidos artigos para serem revisados.</p>
+            <p className="text-muted-foreground">
+              Não foram atribuidos artigos para serem revisados.
+            </p>
           </div>
         )}
       </div>
