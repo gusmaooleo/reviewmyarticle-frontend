@@ -24,13 +24,8 @@ import {
 } from "../ui/sidebar";
 import { IUser } from "@/types/user";
 
-const routes = {
-  "/articles": "Artigos",
-  "/review": "Revisões",
-  // "/admin": "Administração",
-} as const;
 
-type keyofRoutes = keyof typeof routes;
+
 
 export default function AppSidebar({
   congress,
@@ -39,6 +34,20 @@ export default function AppSidebar({
   congress: ICongress;
   user: IUser;
 }) {
+  const routes = (user as any).roles[0].id === 3 ? {
+    "/articles": "Artigos",
+    "/review": "Revisões",
+    // "/admin": "Administração",
+  } : (user as any).roles[0].id === 2 ? {
+    "/articles": "Artigos",
+  } : {
+    "/articles": "Artigos",
+    "/review": "Revisões",
+    "/admin": "Administração",
+  };
+
+  type keyofRoutes = keyof typeof routes;
+
   const pathname = usePathname();
   const classnameRule = (route: keyofRoutes) =>
     pathname.includes(route)
@@ -97,13 +106,16 @@ export default function AppSidebar({
       {/* icon, settings section */}
       <div className="flex flex-row py-4 px-4 md:px-6 md:py-2 w-full justify-between items-center">
         <SidebarTrigger />
-        <Image
-          src={`data:image/jpeg;base64,${user.profileImage}`}
-          alt="userImage"
-          height={40}
-          width={40}
-          className="rounded-full z-1000"
-        />
+        <div className="flex flex-row gap-3 items-center">
+          <p className="z-1000">{user.usernameUser}</p>
+          <Image
+            src={`data:image/jpeg;base64,${user.profileImage}`}
+            alt="userImage"
+            height={40}
+            width={40}
+            className="rounded-full z-1000"
+          />
+        </div>
       </div>
     </>
   );

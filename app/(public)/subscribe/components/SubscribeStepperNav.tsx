@@ -57,8 +57,10 @@ export default function SubscribeStepperNav({
 
   const submitForm = methods.handleSubmit(
     async (data) => {
-      const image = await fileToBase64(data.profilePic.file);
-      data.profilePic = image;
+      if (data.profilePic) {
+        const image = await fileToBase64(data.profilePic.file);
+        data.profilePic = image;
+      }
       await userService.createUser(data, congressToSubscribe);
       toast.success("Inscrição feita com sucesso!");
       router.push("/review")

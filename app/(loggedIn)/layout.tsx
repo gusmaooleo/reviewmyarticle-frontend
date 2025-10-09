@@ -22,6 +22,8 @@ export default async function LoggedInLayout({
     redirect("/login");
   }
 
+  console.log(user)
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex flex-row w-full">

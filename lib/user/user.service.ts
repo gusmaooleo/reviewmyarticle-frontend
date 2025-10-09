@@ -59,7 +59,7 @@ export class UserService {
         congressoId: congressToSubscribe,
         roles: [
           {
-            id: data.isReviewer ? 2 : 3,
+            id: data.isReviewer ? 3 : 2,
             authority: data.isReviewer ? "ROLE_REVIEWER" : "ROLE_PARTICIPANT",
           },
         ],
