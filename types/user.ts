@@ -21,7 +21,7 @@ export const ExtenseUserSchema = z.object({
   membershipNumber: z.string(),
   isReviewer: z.boolean(),
   address: z.number().or(AddressSchema).optional(),
-  profileImage: z.custom<ArrayBuffer>(),
+  profileImage: z.string().optional(),
   cardId: z.number().or(CardSchema).optional(),
   congressoId: z.number(),
   role: RolesSchema,

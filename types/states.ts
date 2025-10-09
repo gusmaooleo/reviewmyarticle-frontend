@@ -1,1 +1,5 @@
-export type AppState = { currentLoggedInCongress?: number; userToken?: string; loggedUserId?: number; };
+export type AppState = {
+  currentLoggedInCongress?: number;
+  userToken?: string;
+  loggedUserId?: number;
+};

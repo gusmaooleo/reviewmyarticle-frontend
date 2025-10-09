@@ -20,7 +20,7 @@ export const PersonalDataSchema = ExtenseUserSchema.omit({
       .string({ message: "Digite o número sem espaços ou hífens." })
       .min(15, "Digite o número completo")
       .max(15),
-    profilePic: z.object().optional(),
+    profilePic: z.any().optional(),
   })
   .refine((data) => data.password === data.passwordConfirmation, {
     message: "As senhas não coincidem",

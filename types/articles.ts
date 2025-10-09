@@ -7,20 +7,20 @@ export const ArticleSchema = z.object({
   description: z.string().optional(),
   body: z.string({ message: "Envie um artigo antes de submeter." }),
   title: z.string().min(6, "O título deve ter ao menos 6 ou mais caracteres.").max(96),
-  knowledgeAreas: z.array(z.string()).optional(),
+  knowledgeArea: z.array(z.string()).optional(),
   format: AcceptedArticleFormats,
   publishedAt: z.date(),
-  articlesUsers: z.custom<number[]>().optional(),
+  articlesUsersIds: z.custom<number[]>().optional(),
   review: z.custom<number[]>().optional(),
-  congressId: z.number(),
+  congressoId: z.number(),
 });
 
 export const ArticleFormSchema = ArticleSchema.pick({
   title: true,
-  knowledgeAreas: true,
+  knowledgeArea: true,
   description: true,
   body: true,
-  articlesUsers: true,
+  articlesUsersIds: true,
   format: true,
 });
 

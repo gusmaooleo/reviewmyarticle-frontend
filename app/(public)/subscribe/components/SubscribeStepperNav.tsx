@@ -21,15 +21,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { validateStep } from "@/lib/subscribe/subscribe.helpers";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { fileToBase64 } from "@/lib/utils/fileToBase64";
+import { UserService } from "@/lib/user/user.service";
 
 type ISteps = {
   title: string;
   component: React.ReactNode;
 };
 
-export default function SubscribeStepperNav() {
+export default function SubscribeStepperNav({
+  congressToSubscribe,
+}: {
+  congressToSubscribe: number;
+}) {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const router = useRouter();
+  const userService = new UserService();
 
   const methods = useForm<SubscribeForm>({
     resolver: zodResolver(SubscribeSchema),
@@ -49,12 +56,19 @@ export default function SubscribeStepperNav() {
   };
 
   const submitForm = methods.handleSubmit(
-    (data) => {
+    async (data) => {
+      const image = await fileToBase64(data.profilePic.file);
+      data.profilePic = image;
+      await userService.createUser(data, congressToSubscribe);
       toast.success("Inscrição feita com sucesso!");
       router.push("/review")
     },
     (errors) => {
-      toast.error("Erro ao realizar inscrição", { description: "Verifique se todos os campos foram preenchidos corretamente." });
+      console.log(errors);
+      toast.error("Erro ao realizar inscrição", {
+        description:
+          "Verifique se todos os campos foram preenchidos corretamente.",
+      });
     }
   );
 

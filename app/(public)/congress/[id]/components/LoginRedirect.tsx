@@ -20,7 +20,7 @@ export default function LoginRedirect({ congressId }: { congressId: number }) {
         onClick={async () =>
           await updateAppState({ currentLoggedInCongress: congressId })
         }
-        href={"/subscribe"}
+        href={`/subscribe?id=${congressId}`}
       >
         <Button>Inscrever -&gt;</Button>
       </Link>

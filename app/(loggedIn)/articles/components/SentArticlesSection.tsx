@@ -10,9 +10,9 @@ export default async function SentArticlesSection() {
   let articles: any[] | null = [];
 
   if (appState.currentLoggedInCongress) {
-    articles = await articleService.getArticlesPerCongress(
+    articles = (await articleService.getArticlesPerCongress(
       appState.currentLoggedInCongress
-    );
+    )) as any;
   }
 
   return (

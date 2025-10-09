@@ -7,6 +7,7 @@ import { getAppState } from "@/lib/state";
 import { AppState } from "@/types/states";
 import { IUser } from "@/types/user";
 import { redirect } from "next/navigation";
+import { updateAppState } from "../actions/actions";
 
 export default async function LoggedInLayout({
   children,
@@ -20,15 +21,14 @@ export default async function LoggedInLayout({
   if (!user.id || appState.currentLoggedInCongress !== user.congressoId) {
     redirect("/login");
   }
-  
 
   return (
     <SidebarProvider>
       <div className="min-h-screen flex flex-row w-full">
         {congress ? (
           <div className="flex flex-col w-full">
-            <AppSidebar congress={congress} />
-            <main className="flex-grow p-6">{children}</main>
+            <AppSidebar user={user} congress={congress} />
+            <main className="flex-grow p-4">{children}</main>
           </div>
         ): (<p>Não foi possível encontrar os congressos</p>)}
       </div>

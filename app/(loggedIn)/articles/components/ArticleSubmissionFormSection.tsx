@@ -10,13 +10,14 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useState } from "react";
 import { FileWithPreview } from "@/hooks/use-file-upload";
 import { X } from "lucide-react";
+import { createArticleAction } from "@/app/actions/actions";
 
 export default function ArticleSubmissionFormSection({ loggedUserId }: { loggedUserId?: number }) {
   const methods = useForm<IArticleForm>({
     resolver: zodResolver(ArticleFormSchema),
     mode: "onTouched",
     defaultValues: {
-      articlesUsers: [],
+      articlesUsersIds: [],
       format: "PDF",
     },
   });
@@ -53,7 +54,7 @@ export default function ArticleSubmissionFormSection({ loggedUserId }: { loggedU
       if (value && !knowledgeAreas.includes(value)) {
         const updated = [...knowledgeAreas, value];
         setKnowledgeAreas(updated);
-        setValue("knowledgeAreas", updated);
+        setValue("knowledgeArea", updated);
         setKnowledgeInput("");
       }
     }
@@ -62,13 +63,15 @@ export default function ArticleSubmissionFormSection({ loggedUserId }: { loggedU
   const removeKnowledgeArea = (area: string) => {
     const updated = knowledgeAreas.filter((a) => a !== area);
     setKnowledgeAreas(updated);
-    setValue("knowledgeAreas", updated);
+    setValue("knowledgeArea", updated);
   };
 
   const submitForm = methods.handleSubmit(
-    (data) => {
-      data.articlesUsers?.push(loggedUserId!); 
-      console.log("🧾 Dados do artigo:", data);
+    async (data) => {
+      console.log(data);
+      data.articlesUsersIds?.push(loggedUserId!)
+      const a = await createArticleAction(data);
+      console.log(a)
     },
     (errors) => {
       // console.error(errors);
@@ -96,7 +99,7 @@ export default function ArticleSubmissionFormSection({ loggedUserId }: { loggedU
                   onChange={(e) => setKnowledgeInput(e.target.value)}
                   onKeyDown={handleKnowledgeKeyDown}
                   placeholder="Digite uma área e pressione Enter"
-                  error={errors.knowledgeAreas?.message}
+                  error={errors.knowledgeArea?.message}
                 />
 
                 <div className="flex flex-wrap gap-2 mt-2">
@@ -138,8 +141,8 @@ export default function ArticleSubmissionFormSection({ loggedUserId }: { loggedU
 
               <InputLabel
                 labelText="Adicionar contribuinte"
-                {...register("articlesUsers")}
-                error={errors.articlesUsers?.message}
+                {...register("articlesUsersIds")}
+                error={errors.articlesUsersIds?.message}
               />
             </div>
 

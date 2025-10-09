@@ -4,6 +4,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { InputLabel } from "@/components/shared/InputLabel";
 import AvatarUpload from "@/components/file-upload/avatar-upload";
 import formatPhone from "@/lib/utils/formatPhoneNumber";
+import { useEffect, useState } from "react";
 
 export function PersonalData() {
   const {
@@ -11,6 +12,8 @@ export function PersonalData() {
     control,
     formState: { errors },
   } = useFormContext();
+
+  const [avatarValue, setAvatarValue] = useState<any>(null);
 
   return (
     <div className="flex flex-col w-full gap-6">
@@ -116,12 +119,18 @@ export function PersonalData() {
           <Controller
             name="profilePic"
             control={control}
-            render={({ field: { value, onChange } }) => (
-              <AvatarUpload
-                defaultAvatar={value ? value.preview ?? undefined : undefined}
-                onFileChange={(f) => onChange(f)}
-              />
-            )}
+            render={({ field: { value, onChange } }) => {
+              useEffect(() => {
+                setAvatarValue(value);
+              }, [value]);
+
+              return (
+                <AvatarUpload
+                  defaultAvatar={avatarValue?.preview ?? undefined}
+                  onFileChange={(f) => onChange(f)}
+                />
+              );
+            }}
           />
         </div>
       </div>

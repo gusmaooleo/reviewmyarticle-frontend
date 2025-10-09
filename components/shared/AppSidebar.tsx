@@ -1,27 +1,44 @@
 "use client";
 
+import logo from "@/public/logo-icon.svg";
+import { ICongress } from "@/types/congress";
+import { SearchIcon } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Button } from "../ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarTrigger,
 } from "../ui/sidebar";
-import logo from "@/public/logo-icon.svg";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { ICongress } from "@/types/congress";
-import { SearchIcon } from "lucide-react";
+import { IUser } from "@/types/user";
 
 const routes = {
   "/articles": "Artigos",
   "/review": "Revisões",
-  "/admin": "Administração",
+  // "/admin": "Administração",
 } as const;
 
 type keyofRoutes = keyof typeof routes;
 
-export default function AppSidebar({ congress }: { congress: ICongress }) {
+export default function AppSidebar({
+  congress,
+  user,
+}: {
+  congress: ICongress;
+  user: IUser;
+}) {
   const pathname = usePathname();
   const classnameRule = (route: keyofRoutes) =>
     pathname.includes(route)
@@ -46,10 +63,23 @@ export default function AppSidebar({ congress }: { congress: ICongress }) {
               ))}
             </div>
             <div className="flex flex-col w-full md:items-center md:justify-center md:flex-row gap-3">
-              <div className="flex flex-row gap-2 max-[766px]:max-w-fit max-w-[200px] rounded-full bg-(--default-dark) px-3 py-1 text-white font-medium items-center cursor-pointer">
-                <SearchIcon />
-                <p className="truncate">Pesquisar artigo</p>
-              </div>
+              <Dialog>
+                <DialogTrigger className="flex flex-row gap-2 max-[766px]:max-w-fit max-w-[200px] rounded-full bg-(--default-dark) px-3 py-1 text-white font-medium items-center cursor-pointer">
+                  <SearchIcon />
+                  <p className="truncate">Pesquisar artigo</p>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Pesquisar artigos</DialogTitle>
+                  </DialogHeader>
+
+                  <DialogFooter>
+                    <DialogClose asChild>
+                      <Button variant="outline">Cancelar</Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
               <div className="flex flex-row gap-2 max-[766px]:max-w-full max-[990px]:max-w-[100px] max-w-[300px] rounded-full bg-(--primary-light-blue) px-1 py-1 text-white font-semibold items-center">
                 <Image
                   src={congress.imageThumbnail ?? ""}
@@ -67,7 +97,13 @@ export default function AppSidebar({ congress }: { congress: ICongress }) {
       {/* icon, settings section */}
       <div className="flex flex-row py-4 px-4 md:px-6 md:py-2 w-full justify-between items-center">
         <SidebarTrigger />
-        <div className="bg-black h-[40px] w-[40px] rounded-full z-1000"></div>
+        <Image
+          src={`data:image/jpeg;base64,${user.profileImage}`}
+          alt="userImage"
+          height={40}
+          width={40}
+          className="rounded-full z-1000"
+        />
       </div>
     </>
   );
